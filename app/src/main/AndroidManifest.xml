@@ -18,6 +18,7 @@
 
         <activity android:name=".main.RecycleActivity"/>
         <activity android:name=".lottie.LottieActivity"/>
+        <activity android:name=".customlottie.CustomLottieActivity"/>
     </application>
 
 </manifest>

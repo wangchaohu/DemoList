@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.x.chwang.demolist.R;
 import com.x.chwang.demolist.base.BaseActivity;
+import com.x.chwang.demolist.customlottie.CustomLottieActivity;
 import com.x.chwang.demolist.lottie.LottieActivity;
 
 import java.util.Arrays;
@@ -23,8 +24,8 @@ import java.util.List;
  */
 public class RecycleActivity extends BaseActivity {
 
-    private List<String> chwang_s = Arrays.asList("Lottie简单使用");
-    private List chwang_c = Arrays.asList(LottieActivity.class);
+    private List<String> chwang_s = Arrays.asList("Lottie简单使用","Lottie自定义动画");
+    private List chwang_c = Arrays.asList(LottieActivity.class, CustomLottieActivity.class);
 
     @Override
     public void initViews(Bundle savedInstanceState) {
