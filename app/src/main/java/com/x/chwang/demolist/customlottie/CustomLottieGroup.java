@@ -4,13 +4,13 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.model.LottieComposition;
-import com.x.chwang.demolist.R;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by lapsen_wang on 2017/2/9/0009.
  */
-public class CustomLottieGroup extends FrameLayout {
+public class CustomLottieGroup extends LinearLayout {
     private final Map<String, LottieComposition> compositionMap = new HashMap<>();
     private final List<View> views = new ArrayList<>();
 
@@ -45,22 +45,6 @@ public class CustomLottieGroup extends FrameLayout {
     }
 
     private void init() {
-        LottieComposition.fromAssetFileName(getContext(), "BlinkingCursor.json",
-                new LottieComposition.OnCompositionLoadedListener() {
-                    @Override
-                    public void onCompositionLoaded(LottieComposition composition) {
-                        cursorView = new LottieAnimationView(getContext());
-                        CustomLottieGroup.LayoutParams layoutParams = new CustomLottieGroup.LayoutParams(
-                                ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        cursorView.setLayoutParams(layoutParams);
-                        cursorView.setComposition(composition);
-                        cursorView.loop(true);
-                        cursorView.playAnimation();
-                        addView(cursorView);
-                    }
-                });
 
         for (int i = 0; i < lapsen.length; i++){
             try {
@@ -121,15 +105,18 @@ public class CustomLottieGroup extends FrameLayout {
 
         for (int i = 0; i < views.size(); i++) {
             View view = views.get(i);
-            if (!fitsOnCurrentLine(currentX, view)) {
-                currentX = getPaddingLeft();
-                currentY += view.getMeasuredHeight();
-            }
+//            if (!fitsOnCurrentLine(currentX, view)) {     //如果超过屏幕
+//                currentX = getPaddingLeft();              //得到左边界
+//                currentY += view.getMeasuredHeight();      //下一行开始
+//            }
             currentX += view.getWidth();
         }
 
+//        setMeasuredDimension(getMeasuredWidth(),
+//                currentY + views.get(views.size() - 1).getMeasuredHeight()*2);   //不太明白什么意思
+
         setMeasuredDimension(getMeasuredWidth(),
-                currentY + views.get(views.size() - 1).getMeasuredHeight() * 2 - 80);
+                currentY + views.get(views.size() - 1).getMeasuredHeight());
     }
 
     @Override
@@ -142,10 +129,10 @@ public class CustomLottieGroup extends FrameLayout {
 
         for (int i = 0; i < views.size(); i++) {
             View view = views.get(i);
-            if (!fitsOnCurrentLine(currentX, view)) {
-                currentX = getPaddingLeft();
-                currentY += view.getMeasuredHeight();
-            }
+//            if (!fitsOnCurrentLine(currentX, view)) {
+//                currentX = getPaddingLeft();
+//                currentY += view.getMeasuredHeight();
+//            }
             view.layout(currentX, currentY, currentX + view.getMeasuredWidth(),
                     currentY + view.getMeasuredHeight());
             currentX += view.getWidth();
@@ -156,9 +143,11 @@ public class CustomLottieGroup extends FrameLayout {
     private void addComposition(LottieComposition composition) {
         LottieAnimationView lottieAnimationView = new LottieAnimationView(getContext());
         CustomLottieGroup.LayoutParams layoutParams = new CustomLottieGroup.LayoutParams(
-                100,100,TEXT_ALIGNMENT_CENTER
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.setMarginStart(100);
+        layoutParams.width = 120;
+        layoutParams.setMargins(0,0,0,0);
+        layoutParams.gravity = Gravity.CENTER;
         lottieAnimationView.setLayoutParams(layoutParams);
         lottieAnimationView.setComposition(composition);
         lottieAnimationView.playAnimation();
