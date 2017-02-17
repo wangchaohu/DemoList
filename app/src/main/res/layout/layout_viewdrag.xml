@@ -5,15 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<Button
-    android:id="@+id/btn"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+
     <LinearLayout
         android:id="@+id/head_lay"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+        <ImageView
+            android:id="@+id/img"
+            android:src="@drawable/charge_up"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="合肥市庐阳区长江中路294号"/>
+        <Button
+            android:id="@+id/assess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我要评价"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contentview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="途经长江中路"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="途经长江中路"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="途经长江中路"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="途经长江中路"/>
     </LinearLayout>
 </com.x.chwang.demolist.viewdrag.ViewDragLayout>
