@@ -14,6 +14,7 @@ import com.x.chwang.demolist.R;
 import com.x.chwang.demolist.base.BaseActivity;
 import com.x.chwang.demolist.customlottie.CustomLottieActivity;
 import com.x.chwang.demolist.lottie.LottieActivity;
+import com.x.chwang.demolist.sendmail.SendEmailActivity;
 import com.x.chwang.demolist.viewdrag.ViewDragActivity;
 import com.x.chwang.demolist.write.WriteActivity;
 
@@ -23,11 +24,16 @@ import java.util.List;
 
 /**
  * Created by xwangch on 16/8/2.
+ *
+ * fun：主界面
+ *
+ * 可以根据数组长度的大小自动添加按钮，实现跳转
  */
 public class RecycleActivity extends BaseActivity {
 
-    private List<String> chwang_s = Arrays.asList("Lottie简单使用","Lottie自定义动画","ViewDrag使用","读写文件");
-    private List chwang_c = Arrays.asList(LottieActivity.class, CustomLottieActivity.class, ViewDragActivity.class, WriteActivity.class);
+    private List<String> chwang_s = Arrays.asList("Lottie简单使用","Lottie自定义动画","ViewDrag使用","读写文件","发送邮件");
+    private List chwang_c = Arrays.asList(LottieActivity.class, CustomLottieActivity.class, ViewDragActivity.class, WriteActivity.class,
+            SendEmailActivity.class);
 
     @Override
     public void initViews(Bundle savedInstanceState) {

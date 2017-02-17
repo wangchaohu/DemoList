@@ -16,6 +16,9 @@ import com.x.chwang.demolist.R;
 
 /**
  * Created by xwangch on 16/8/4.
+ *
+ *
+ * ViewDrag自定义类，实现了抽屉效果
  */
 public class ViewDragLayout extends LinearLayout implements View.OnClickListener{
 

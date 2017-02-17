@@ -27,6 +27,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.airbnb.android:lottie:1.0.1'    //lottie动画
 
-    compile 'com.airbnb.android:lottie:1.0.1'      //lottie动画
+    //下面两个是发送邮件需要的jar包
+    compile files('src/main/libs/activation.jar')
+    compile files('src/main/libs/javax.mail-1.5.6.jar')
 }

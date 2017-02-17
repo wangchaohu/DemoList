@@ -25,6 +25,9 @@ import static android.R.id.message;
 
 /**
  * Created by lapsen_wang on 2017/2/17/0017.
+ *
+ *
+ * 向android手机sd卡中写入文件，与读取文件
  */
 
 public class WriteActivity extends AppCompatActivity {

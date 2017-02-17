@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.x.chwang.demolist">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <!-- 向SDCard写入数据权限 -->
@@ -26,6 +27,7 @@
         <activity android:name=".customlottie.CustomLottieActivity"/>
         <activity android:name=".viewdrag.ViewDragActivity"/>
         <activity android:name=".write.WriteActivity"/>
+        <activity android:name=".sendmail.SendEmailActivity"/>
     </application>
 
 </manifest>

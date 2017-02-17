@@ -13,6 +13,13 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.x.chwang.demolist.R;
 import com.x.chwang.demolist.base.BaseActivity;
 
+
+/**
+ *
+ * fun:使用开源库lottie实现动画
+ * 这里是Lottie的使用Demo
+ * */
+
 public class LottieActivity extends BaseActivity{
 
     private LottieAnimationView lottieAnimationView;
