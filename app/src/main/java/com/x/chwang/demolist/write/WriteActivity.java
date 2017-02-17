@@ -15,9 +15,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+
+import static android.R.id.message;
 
 /**
  * Created by lapsen_wang on 2017/2/17/0017.
@@ -33,7 +37,7 @@ public class WriteActivity extends AppCompatActivity {
         findViewById(R.id.btn_write).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                writeFile(et.getText().toString());
+                writeTxtToFile(et.getText().toString());
             }
         });
     }
@@ -43,60 +47,54 @@ public class WriteActivity extends AppCompatActivity {
      *
      */
 
-    private String getDefaultFilePath() {
-        String filepath = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/myAccount";
-        File file = new File(filepath);
+    // 将字符串写入到文本文件中
+    public void writeTxtToFile(String strcontent) {
+        String filePath = Environment.getExternalStorageDirectory() + "/myAccount";
+        String fileName = "/ceshi.json";
+        //生成文件夹之后，再生成文件，不然会出错
+        makeFilePath(filePath, fileName);
 
-        if (!file.exists()){
-            file.mkdir();
-        }
-
-        file = new File(filepath,"abc.txt");
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-
-        }
-        return filepath;
-    }
-
-    /**
-     * 使用bufferReader读取文件
-     * */
-    private void readFile(){
-        try{
-            File file = new File(getDefaultFilePath());
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String readLine = "";
-            StringBuffer sb = new StringBuffer();
-            while ((readLine = br.readLine()) != null){
-                sb.append(readLine);
-            }
-            br.close();
-        }catch (FileNotFoundException e){
-
-        }catch (IOException e){
-
-        }
-    }
-
-    /**
-     *
-     * 使用bufferWrite写入文件
-     * */
-
-    private void writeFile(String content){
+        String strFilePath = filePath+fileName;
+        // 每次写入时，都换行写
+        String strContent = strcontent + "\r\n";
         try {
-            File file = new File(getDefaultFilePath());
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-            bw.write(content);
-            bw.flush();
-        }catch (IOException e){
+            File file = new File(strFilePath);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            raf.write(strContent.getBytes());
+            raf.close();
+        } catch (Exception e) {
+        }
+    }
+    // 生成文件
+    public File makeFilePath(String filePath, String fileName) {
+        File file = null;
+        makeRootDirectory(filePath);
+        try {
+            file = new File(filePath + fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 
+    // 生成文件夹
+    public static void makeRootDirectory(String filePath) {
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+        } catch (Exception e) {
         }
     }
 }
+
