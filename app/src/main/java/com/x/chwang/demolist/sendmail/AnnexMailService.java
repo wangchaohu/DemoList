@@ -1,17 +1,19 @@
 package com.x.chwang.demolist.sendmail;
 
-import java.util.Date;
+
 import java.util.Properties;
 
-import javax.mail.BodyPart;
+import javax.activation.CommandMap;
+import javax.activation.DataHandler;
+import javax.activation.MailcapCommandMap;
 import javax.mail.Message;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /**
  * Created by wangchaohu on 2017/2/17.
@@ -22,66 +24,52 @@ import javax.mail.internet.MimeMultipart;
 public class AnnexMailService {
 
 
-        public static boolean sendMail(String subject, String toMail,
-                                       String content) {
-            boolean isFlag = false;
-            try {
+    public static void sendEmail(String host, String address, String from, String password, String to, String port, String subject, String content){
 
-                String smtpFromMail = "839461699@qq.com";  //账号
-                String pwd = "zx1115hx"; //密码
-                int port = 25; //端口
-                String host = "smtp.qq.com"; //端口
+           try {
 
-                Properties props = new Properties();
-                props.setProperty("mail.transport.protocol", "smtp");
-                props.setProperty("mail.host", "smtp.qq.com");
-                props.setProperty("mail.smtp.auth", "true");
-                Session session = Session.getDefaultInstance(props);
-                session.setDebug(false);
+               Multipart multiPart;
+               String finalString = "";
 
-                MimeMessage message = new MimeMessage(session);
-                try {
-                    message.setFrom(new InternetAddress(smtpFromMail, "QQ邮件测试"));
-                    message.addRecipient(Message.RecipientType.TO,
-                            new InternetAddress(toMail));
-                    message.setSubject(subject);
-                    message.addHeader("charset", "UTF-8");
+               Properties props = new Properties();
+               props.put("mail.smtp.starttls.enable", "true");
+               props.put("mail.smtp.host", host);
+               props.put("mail.smtp.user", address);
+               props.put("mail.smtp.password", password);
+               props.put("mail.smtp.port", port);
+               props.put("mail.smtp.auth", "true");
 
-                /*添加正文内容*/
-                    Multipart multipart = new MimeMultipart();
-                    BodyPart contentPart = new MimeBodyPart();
-                    contentPart.setText(content);
+               Session session = Session.getDefaultInstance(props, null);
+               DataHandler handler = new DataHandler(new ByteArrayDataSource(finalString.getBytes(), "text/plain"));
+               MimeMessage message = new MimeMessage(session);
+               message.setFrom(new InternetAddress(from));
+               message.setDataHandler(handler);
 
-                    contentPart.setHeader("Content-Type", "text/html; charset=utf-8");
-                    multipart.addBodyPart(contentPart);
 
-                /*添加附件*/
-//                    for (String file : files) {
-//                        File usFile = new File(file);
-//                        MimeBodyPart fileBody = new MimeBodyPart();
-//                        DataSource source = new FileDataSource(file);
-//                        fileBody.setDataHandler(new DataHandler(source));
-//                        sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
-//                        fileBody.setFileName("=?GBK?B?"
-//                                + enc.encode(usFile.getName().getBytes()) + "?=");
-//                        multipart.addBodyPart(fileBody);
-//                    }
+               multiPart = new MimeMultipart();
+               InternetAddress toAddress;
+               toAddress = new InternetAddress(to);
+               message.addRecipient(Message.RecipientType.TO, toAddress);
 
-                    message.setContent(multipart);
-                    message.setSentDate(new Date());
-                    message.saveChanges();
-                    Transport transport = session.getTransport("smtp");
+               message.setSubject(subject);
+               message.setContent(multiPart);
+               message.setText(content);
 
-                    transport.connect(host, port, smtpFromMail, pwd);
-                    transport.sendMessage(message, message.getAllRecipients());
-                    transport.close();
-                    isFlag = true;
-                } catch (Exception e) {
-                    isFlag = false;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return isFlag;
+               MailcapCommandMap mc = (MailcapCommandMap) CommandMap.getDefaultCommandMap();
+               mc.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html");
+               mc.addMailcap("text/xml;; x-java-content-handler=com.sun.mail.handlers.text_xml");
+               mc.addMailcap("text/plain;; x-java-content-handler=com.sun.mail.handlers.text_plain");
+               mc.addMailcap("multipart/*;; x-java-content-handler=com.sun.mail.handlers.multipart_mixed");
+               mc.addMailcap("message/rfc822;; x-java-content-handler=com.sun.mail.handlers.message_rfc822");
+               CommandMap.setDefaultCommandMap(mc);
+
+               Transport transport = session.getTransport("smtp");
+               transport.connect(host, address, password);
+               transport.sendMessage(message, message.getAllRecipients());
+               transport.close();
+           }catch (Exception e){
+               e.printStackTrace();
+           }
+
         }
     }

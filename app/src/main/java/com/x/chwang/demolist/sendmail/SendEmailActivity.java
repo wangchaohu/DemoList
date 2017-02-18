@@ -26,14 +26,19 @@ public class SendEmailActivity extends BaseActivity{
         findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AnnexMailService.sendMail("你好", "xwangch@yeah.net", editText.getText().toString());
-                    }
-                }).start();
 
+send();
             }
         });
+    }
+
+    public void send(){
+        String host = "smtp.yeah.net";
+        String address = "xwangch@yeah.net";
+        String from = "xwangch@yeah.net";
+        String password = "zx1115hx";// 密码
+
+        String port = "465";
+        AnnexMailService.sendEmail(host, address, from, password, "839461699@qq.com", port, "测试", "测试测试");
     }
 }
